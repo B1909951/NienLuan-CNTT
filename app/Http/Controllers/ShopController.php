@@ -47,7 +47,7 @@ class ShopController extends Controller
         $all_genre = DB::table('genres')->where('genres.show','1')->get();
         $pro_genre = DB::table('product_genres')->join('genres','genres.id','=','product_genres.genre_id')->where('genres.show','1')->where('product_genres.product_id',$id)->select('genres.name', 'product_genres.genre_id')->get();
 
-        $comments = DB::table('rates')->where('rates.product_id',$id)->join('customers','customers.customer_id','=','rates.customer_id')->select('rates.*','customers.name','customers.customer_id')->orderby('rate_id','desc')->get();
+        $comments = DB::table('rates')->where('rates.status','1')->where('rates.product_id',$id)->join('customers','customers.customer_id','=','rates.customer_id')->select('rates.*','customers.name','customers.customer_id')->orderby('rate_id','desc')->get();
         $same_products = DB::table('products')
         ->join('categories','categories.id','=','products.cate_id')
         ->where('categories.id',$product->cate_id)->where('products.show','1')->where('categories.show','1')->whereNotIn('products.id',[$id])->select('products.id as pro_id', 'products.name', 'products.image', 'products.price')->limit(6)->get();

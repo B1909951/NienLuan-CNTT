@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 26, 2022 at 09:39 PM
+-- Generation Time: Dec 03, 2022 at 04:28 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -61,15 +61,6 @@ CREATE TABLE `carts` (
   `created_at` date DEFAULT NULL,
   `updated_at` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `carts`
---
-
-INSERT INTO `carts` (`cart_id`, `customer_id`, `product_id`, `count`, `created_at`, `updated_at`) VALUES
-(43, 10, 38, 1, '2022-11-19', '2022-11-19'),
-(44, 10, 35, 1, '2022-11-19', '2022-11-19'),
-(45, 10, 37, 2, '2022-11-19', '2022-11-19');
 
 -- --------------------------------------------------------
 
@@ -176,7 +167,13 @@ INSERT INTO `details_orders` (`details_order_id`, `customer_id`, `product_id`, `
 (38, 11, 37, 57, 1, '2022-11-19', '2022-11-19'),
 (39, 12, 36, 58, 1, '2022-11-27', '2022-11-27'),
 (40, 12, 36, 59, 2, '2022-11-27', '2022-11-27'),
-(41, 12, 34, 60, 1, '2022-11-27', '2022-11-27');
+(41, 12, 34, 60, 1, '2022-11-27', '2022-11-27'),
+(42, 10, 38, 61, 1, '2022-12-03', '2022-12-03'),
+(43, 10, 35, 61, 1, '2022-12-03', '2022-12-03'),
+(44, 10, 37, 61, 2, '2022-12-03', '2022-12-03'),
+(45, 10, 33, 61, 1, '2022-12-03', '2022-12-03'),
+(46, 10, 34, 62, 1, '2022-12-03', '2022-12-03'),
+(47, 10, 36, 68, 3, '2022-12-03', '2022-12-03');
 
 -- --------------------------------------------------------
 
@@ -255,7 +252,8 @@ INSERT INTO `notifications` (`notif_id`, `customer_id`, `admin_id`, `message`, `
 (30, 11, 12, 'Đơn hàng có mã 56 của bạn đã được ký nhận', 1, '2022-11-19', '2022-11-19'),
 (31, 12, 12, 'Đơn hàng có mã 59 của bạn đang được vận chuyển', 1, '2022-11-27', '2022-11-27'),
 (32, 12, 12, 'Đơn hàng có mã 58 của bạn đang được vận chuyển', 1, '2022-11-27', '2022-11-27'),
-(33, 12, 12, 'Đơn hàng có mã 58 của bạn đã được ký nhận', 1, '2022-11-27', '2022-11-27');
+(33, 12, 12, 'Đơn hàng có mã 58 của bạn đã được ký nhận', 1, '2022-11-27', '2022-11-27'),
+(34, 10, 1, 'Đơn hàng có mã 61 của bạn đang được vận chuyển', 1, '2022-12-03', '2022-12-03');
 
 -- --------------------------------------------------------
 
@@ -267,8 +265,8 @@ CREATE TABLE `orders` (
   `order_id` int(10) UNSIGNED NOT NULL,
   `customer_id` int(10) UNSIGNED NOT NULL,
   `coupon_id` int(10) UNSIGNED NOT NULL,
-  `sub_total` int(11) NOT NULL,
-  `total` int(11) NOT NULL,
+  `sub_total` float NOT NULL,
+  `total` float NOT NULL,
   `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` int(1) NOT NULL DEFAULT 0,
@@ -287,7 +285,10 @@ INSERT INTO `orders` (`order_id`, `customer_id`, `coupon_id`, `sub_total`, `tota
 (57, 11, 1, 128000, 128000, '1', '123', 0, '2022-11-19', '2022-11-19'),
 (58, 12, 1, 60000, 60000, '1', '1', 2, '2022-11-27', '2022-11-27'),
 (59, 12, 6, 120000, 90000, '1', 'ĐH Cần Thơ, KTX A', 1, '2022-11-27', '2022-11-27'),
-(60, 12, 1, 20000, 20000, '1', 'ĐH Cần Thơ, KTX A', 0, '2022-11-27', '2022-11-27');
+(60, 12, 1, 20000, 20000, '1', 'ĐH Cần Thơ, KTX A', 0, '2022-11-27', '2022-11-27'),
+(61, 10, 6, 273000, 204750, '1', 'Cần Thơ', 1, '2022-12-03', '2022-12-03'),
+(62, 10, 1, 20000, 20000, '1', 'Cần Thơ', 0, '2022-12-03', '2022-12-03'),
+(68, 10, 1, 180000, 180000, '1', 'Cần Thơ', 0, '2022-12-03', '2022-12-03');
 
 -- --------------------------------------------------------
 
@@ -300,7 +301,7 @@ CREATE TABLE `products` (
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `cate_id` int(10) UNSIGNED DEFAULT NULL,
-  `price` int(11) NOT NULL,
+  `price` float NOT NULL,
   `desc` text NOT NULL,
   `detail` text NOT NULL,
   `star` int(10) UNSIGNED NOT NULL DEFAULT 5,
@@ -319,9 +320,9 @@ INSERT INTO `products` (`id`, `name`, `image`, `cate_id`, `price`, `desc`, `deta
 (31, 'Thanh Gươm Diệt Quỷ', 'tieu-thuyet-chuyen-the---thanh-guom-diet-quy---cau-chuyen-ve-tinh-anh-em-va-doi-diet-quy-obi7466.jpg', 12, 80000, 'Kể về câu chuyện về hành trình đi diệt quỷ và giải thoát em gái khỏi lời nguyền quỷ của Tanjiro', 'Nhà xuất bản Kim Đồng', 5, 1, 1, '2022-11-19', '2022-11-19'),
 (32, 'Thị trấn vắng mình tôi', 'thi-tran-vang-minh-toi_bia-14468.jpg', 15, 25000, 'Tôi đang ở đâu thế này, mọi người đã đi đâu hết rồi!', 'Nhà xuất bản kim đồng', 5, 1, 1, '2022-11-19', '2022-11-19'),
 (33, 'Tanaka Lúc Nào Cũng Vật Vờ - Tập 3', 'tanaka-luc-nao-cung-vat-vo---tap-38781.jpg', 12, 48000, 'Câu chuyện về cậu bạn Tanaka lúc nào cũng vật vờ', 'Nhà xuất bản Kim Đồng', 5, 1, 1, '2022-11-19', '2022-11-19'),
-(34, 'Tôi thăng cấp 1 mình', '9791191363029_126.jpg', 14, 20000, 'Tôi thăng cấp 1 mình', 'Nhà xuất bản Trẻ', 3, 4, 1, '2022-11-19', '2022-11-27'),
+(34, 'Tôi thăng cấp 1 mình', '9791191363029_126.jpg', 14, 20000, 'Tôi thăng cấp 1 mình', 'Nhà xuất bản Trẻ', 3, 5, 1, '2022-11-19', '2022-12-03'),
 (35, '5cm/s', 'image_195509_1_408214.jpg', 15, 50000, '“Vận tốc rơi của hoa anh đào đấy. Năm centimet trên giây.”', 'Nhà xuất bản Trẻ', 5, 2, 1, '2022-11-19', '2022-11-19'),
-(36, 'Cô Bạn Tôi Thầm Thích Lại Quên Mang Kính Rồi - Tập 5', 'co-ban-toi-tham-thich-lai-quen-mang-kinh-roi---tap-51251.jpg', 12, 60000, 'Cô bạn tôi thầm thích lại quên mang kính rồi! Phải làm sao đây', 'Nhà xuất bản Kim Đồng', 5, 7, 1, '2022-11-19', '2022-11-27'),
+(36, 'Cô Bạn Tôi Thầm Thích Lại Quên Mang Kính Rồi - Tập 5', 'co-ban-toi-tham-thich-lai-quen-mang-kinh-roi---tap-51251.jpg', 12, 60000, 'Cô bạn tôi thầm thích lại quên mang kính rồi! Phải làm sao đây', 'Nhà xuất bản Kim Đồng', 5, 12, 1, '2022-11-19', '2022-12-03'),
 (37, 'Cậu ma nhà xí HaNaKo', 'cau-ma-nha-xi-hanako---tap-05743.jpg', 15, 68000, 'Hài hước', 'Nhà xuất bản trẻ', 5, 4, 1, '2022-11-19', '2022-11-27'),
 (38, 'Tôi, Em Và Cuốn Tiểu Thuyết Còn Dang Dở', 't_i_-em-v_-cu_n-ti_u-thuy_t-c_n-dang-d_6434.jpg', 15, 39000, '“Tôi muốn kể lại câu chuyện hay nhất của mình thay vì để cho những ký ức ấy cứ thế mất đi.”', 'Nhà xuất bản Trẻ', 5, 2, 1, '2022-11-19', '2022-11-19');
 
@@ -394,7 +395,7 @@ CREATE TABLE `rates` (
 --
 
 INSERT INTO `rates` (`rate_id`, `customer_id`, `comment`, `rating`, `created_at`, `updated_at`, `product_id`, `status`) VALUES
-(15, 12, 'Sản phẩm được duyệt và vận chuyển nhanh chóng, chất lượng sản phẩm rất tốt, cảm ơn shop!', 5, '2022-11-27', '2022-11-27', 36, 2),
+(15, 12, 'Sản phẩm được duyệt và vận chuyển nhanh chóng, chất lượng sản phẩm rất tốt, cảm ơn shop!', 5, '2022-11-27', '2022-12-03', 36, 2),
 (16, 12, 'Hay lắm', 3, '2022-11-27', '2022-11-27', 34, 1);
 
 --
@@ -507,7 +508,7 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `cart_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `cart_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -531,7 +532,7 @@ ALTER TABLE `customers`
 -- AUTO_INCREMENT for table `details_orders`
 --
 ALTER TABLE `details_orders`
-  MODIFY `details_order_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `details_order_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT for table `genres`
@@ -549,13 +550,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `notif_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `notif_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `order_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT for table `products`
