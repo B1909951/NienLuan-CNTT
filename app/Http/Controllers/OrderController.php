@@ -83,7 +83,7 @@ class OrderController extends Controller
         if(!Session::get('id')){
             return Redirect::to('admin-login');
         }
-        $order_details = DB::table('details_orders')->where('order_id',$id)->join('products','products.id','=','details_orders.product_id')->select('products.*','products.id as product_id')->get();
+        $order_details = DB::table('details_orders')->where('order_id',$id)->join('products','products.id','=','details_orders.product_id')->select('products.*','products.id as product_id','details_orders.count')->get();
         $admin = Admin::where('id',Session::get('id'))->get();
         $all_genre = DB::table('product_genres')->distinct()->get(['product_id','name']);
         $all_category = Category::all();

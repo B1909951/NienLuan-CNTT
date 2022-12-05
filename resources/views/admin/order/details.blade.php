@@ -34,6 +34,10 @@
                             <div class="th-inner sortable">Danh mục</div>
                             <div class="fht-cell"></div>
                         </th>
+                        <th style="">
+                            <div class="th-inner sortable">Số lượng</div>
+                            <div class="fht-cell"></div>
+                        </th>
                        
                     </tr>
                 </thead>
@@ -65,6 +69,8 @@
                             </div>
                             @endforeach
                         </td>
+                        <td style="">{{$pro->count}}</td>
+
                     </tr>
                     @endif
                     @endforeach
